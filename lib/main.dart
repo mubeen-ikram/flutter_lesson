@@ -32,35 +32,34 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  void updateSomeVars() {
-    // Substitute an operator that makes 'a string' be assigned to bar.
-    bar /* TODO */ 'a string';
+  String? upperCaseIt(String? str) {
+    // TODO: Try conditionally accessing the `toUpperCase` method here.
   }
 
 
-// Tests your solution (Don't edit!):
   void main() {
-    String? foo = 'a string';
-    String? bar; // = null
-
-    // Substitute an operator that makes 'a string' be assigned to baz.
-        String? baz = foo /* TODO */  bar;
-
-
     try {
-      updateSomeVars();
-
-      if (foo != 'a string') {
-        print('Looks like foo somehow ended up with the wrong value.');
-      } else if (bar != 'a string') {
-        print('Looks like bar ended up with the wrong value.');
-      } else if (baz != 'a string') {
-        print('Looks like baz ended up with the wrong value.');
+      String? one = upperCaseIt(null);
+      if (one != null) {
+        print('Looks like you\'re not returning null for null inputs.');
       } else {
-        print('Success!');
+        print('Success when str is null!');
       }
     } catch (e) {
-      print('Exception: ${e.runtimeType}.');
+      print('Tried calling upperCaseIt(null) and got an exception: \n ${e.runtimeType}.');
+    }
+
+    try {
+      String? two = upperCaseIt('a string');
+      if (two == null) {
+        print('Looks like you\'re returning null even when str has a value.');
+      } else if (two != 'A STRING') {
+        print('Tried upperCaseIt(\'a string\'), but didn\'t get \'A STRING\' in response.');
+      } else {
+        print('Success when str is not null!');
+      }
+    } catch (e) {
+      print('Tried calling upperCaseIt(\'a string\') and got an exception: \n ${e.runtimeType}.');
     }
   }
 
