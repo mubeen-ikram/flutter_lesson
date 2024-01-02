@@ -28,6 +28,13 @@ class MyHomePage extends StatefulWidget {
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
+// Implement tryFunction() below. It should execute an untrustworthy method and then do the following:
+//
+// If untrustworthy() throws an ExceptionWithMessage, call logger.logException with the exception type and message (try using on and catch).
+// If untrustworthy() throws an Exception, call logger.logException with the exception type (try using on for this one).
+// If untrustworthy() throws any other object, don’t catch the exception.
+// After everything’s caught and handled, call logger.doneLogging (try using finally).
+
 
 typedef VoidFunction = void Function();
 
