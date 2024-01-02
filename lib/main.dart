@@ -43,15 +43,19 @@ class _MyHomePageState extends State<MyHomePage> {
       _counter++;
     });
   }
+  String stringify(int x, int y) {
+    TODO('Return a formatted string here');
+  }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+
+    void stringProblem() {
+      assert(stringify(2, 3) == '2 3',
+      "Your stringify method returned '${stringify(2, 3)}' instead of '2 3'");
+      print('Success!');
+    }
+
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
