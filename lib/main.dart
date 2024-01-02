@@ -31,26 +31,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-// TODO: Declare the two variables here
+  void main() {
 
-
-// Tests your solution (Don't edit!):
-  void nullSafety() {
-    try {
-      if (name == 'Jane' && address == null) {
-        // verify that "name" is nullable
-        name = null;
-        print('Success!');
-      } else {
-        print('Not quite right, try again!');
-      }
-    } catch (e) {
-      print('Exception: ${e.runtimeType}');
-    }
   }
+
   @override
   Widget build(BuildContext context) {
-    nullSafety();
+    main();
     return const SizedBox();
   }
 }
