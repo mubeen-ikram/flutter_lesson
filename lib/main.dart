@@ -31,26 +31,42 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-// TODO: Declare the two variables here
+
+  void updateSomeVars() {
+    // Substitute an operator that makes 'a string' be assigned to bar.
+    bar /* TODO */ 'a string';
+  }
 
 
 // Tests your solution (Don't edit!):
-  void nullSafety() {
+  void main() {
+    String? foo = 'a string';
+    String? bar; // = null
+
+    // Substitute an operator that makes 'a string' be assigned to baz.
+        String? baz = foo /* TODO */  bar;
+
+
     try {
-      if (name == 'Jane' && address == null) {
-        // verify that "name" is nullable
-        name = null;
-        print('Success!');
+      updateSomeVars();
+
+      if (foo != 'a string') {
+        print('Looks like foo somehow ended up with the wrong value.');
+      } else if (bar != 'a string') {
+        print('Looks like bar ended up with the wrong value.');
+      } else if (baz != 'a string') {
+        print('Looks like baz ended up with the wrong value.');
       } else {
-        print('Not quite right, try again!');
+        print('Success!');
       }
     } catch (e) {
-      print('Exception: ${e.runtimeType}');
+      print('Exception: ${e.runtimeType}.');
     }
   }
+
   @override
   Widget build(BuildContext context) {
-    nullSafety();
+    main();
     return const SizedBox();
   }
 }
