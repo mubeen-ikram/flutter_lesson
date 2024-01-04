@@ -51,11 +51,11 @@ class _MyHomePageState extends State<MyHomePage> {
   errs.add('Called MyClass(1, \'two\', 3) and got an object with anInt of ${obj.anInt} \n instead of the expected value (1).');
   }
 
-  if (obj.anInt != 1) {
+  if (obj.aString != "two") {
   errs.add('Called MyClass(1, \'two\', 3) and got an object with aString of \'${obj.aString}\' \n instead of the expected value (\'two\').');
   }
 
-  if (obj.anInt != 1) {
+  if (obj.aDouble != 3) {
   errs.add('Called MyClass(1, \'two\', 3) and got an object with aDouble of ${obj.aDouble} \n instead of the expected value (3).');
   }
   } catch (e) {
