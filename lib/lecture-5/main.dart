@@ -55,6 +55,11 @@ class MyHomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Column(
+              children:appState.favourites.map((fav){
+                return Text(fav.toString());
+              }).toList(),
+            ),
             BigCard(currentText: currentText),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
