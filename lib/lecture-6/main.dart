@@ -55,3 +55,7 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
+// TODO: WishList Screen and item update
+// TODO: Order History
+// TODO: Add Hide/Show in order History
