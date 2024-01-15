@@ -37,7 +37,7 @@ class _CartViewState extends State<CartView> {
                 itemCount: widget.likedProducts.length,
               ),
             ),
-          if (!widget.likedProducts.isEmpty)
+          if (widget.likedProducts.isNotEmpty)
             Expanded(
               flex: 1,
               child: Column(
@@ -48,7 +48,7 @@ class _CartViewState extends State<CartView> {
                     children: [
                       ElevatedButton(
                           onPressed: () => widget.onClear(),
-                          child: Text("Cart"))
+                          child: const Text("Cart"))
                     ],
                   ),
                 ],

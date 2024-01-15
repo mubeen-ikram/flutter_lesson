@@ -190,7 +190,7 @@ class BigCard2 extends StatelessWidget {
       onTap: () {
         // if (Navigator.canPop(context)) {
 
-        Navigator.pushNamed(context, "/fourth");
+        Navigator.pushNamed(context, "/fourth", arguments: {"id": 3});
         // }
       },
       child: Card(
@@ -217,6 +217,12 @@ class BigCard3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final Map arguments = ModalRoute
+        .of(context)!
+        .settings
+        .arguments as Map;
+
+    print(arguments["id"]);
     final style = theme.textTheme.displayMedium!.copyWith(
       color: theme.colorScheme.onPrimary,
     );

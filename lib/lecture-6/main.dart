@@ -39,14 +39,12 @@ class _MyAppState extends State<MyApp> {
         title: 'Namer App',
         initialRoute: '/',
         routes: {
-          '/cart': (context) => CartView(likedProducts, (Product product) {
-                toggleProductLike(product);
-              }, () {
-                clearAll();
-              }),
-          '/': (context) => MyHomePageL6(likedProducts, (Product product) {
-                toggleProductLike(product);
-              }),
+          '/cart': (context) => CartView(
+              likedProducts,
+              (Product product) => toggleProductLike(product),
+              () => clearAll()),
+          '/': (context) => MyHomePageL6(
+              likedProducts, (Product product) => toggleProductLike(product)),
         },
         theme: ThemeData(
           useMaterial3: true,

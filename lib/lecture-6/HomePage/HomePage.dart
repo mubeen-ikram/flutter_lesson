@@ -18,13 +18,13 @@ class _MyHomePageL6State extends State<MyHomePageL6> {
   Widget build(BuildContext context) {
     var products = getProductsList();
     return Scaffold(
-      appBar: AppBar(title: Text("Products")),
+      appBar: AppBar(title: const Text("Products")),
       drawer: Drawer(
         child: Column(children: [
           ListTile(
             title: GestureDetector(
               onTap: () => Navigator.pushNamed(context, "/cart"),
-              child: Text("My Cart"),
+              child: const Text("My Cart"),
             ),
           )
         ]),
