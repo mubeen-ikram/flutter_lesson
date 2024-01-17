@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:project_example/lecture-6/History.dart';
+import 'package:project_example/lecture-6/WishList/WishList.dart';
 import 'package:provider/provider.dart';
 
 import 'CartView/CartView.dart';
@@ -14,6 +16,8 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   List<Product> likedProducts = [];
+  List<Product> wishList = [];
+  List<Product> historyList= [];
 
   void toggleProductLike(Product product) {
     setState(() {
@@ -25,36 +29,59 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  void toggleWishProduct(Product product) {
+    setState(() {
+      if (wishList.map((e) => e.id).contains(product.id)) {
+        wishList.removeWhere((element) => element.id == product.id);
+      } else {
+        wishList.add(product);
+      }
+    });
+  }
+
   void clearAll() {
     setState(() {
       likedProducts.clear();
+      wishList.clear();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (BuildContext context) {},
-      child: MaterialApp(
-        title: 'Namer App',
-        initialRoute: '/',
-        routes: {
-          '/cart': (context) => CartView(
-              likedProducts,
-              (Product product) => toggleProductLike(product),
-              () => clearAll()),
-          '/': (context) => MyHomePageL6(
-              likedProducts, (Product product) => toggleProductLike(product)),
-        },
-        theme: ThemeData(
-          useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
+    return MaterialApp(
+      title: 'Namer App',
+      initialRoute: '/',
+      routes: {
+        '/cart': (context) => CartView(
+            likedProducts,
+            wishList,
+            (Product product) => toggleProductLike(product),
+                (Product product) => toggleWishProduct(product),
+                () => clearAll()
         ),
-        // home: MyHomePage(),
+        '/wishlist': (context) => WishList(
+            likedProducts,
+            wishList,
+                (Product product) => toggleProductLike(product),
+            (Product product) => toggleWishProduct(product),
+                () => clearAll()
+        ),
+        // '/history': (context) => History(historyList: [],),
+        '/': (context) => MyHomePageL6(
+          likedProducts: likedProducts,
+          wishList: wishList,
+          onProductToggle: (Product product) => toggleProductLike(product), onProductWishToggle: (Product product) => toggleWishProduct(product),
+        ),
+      },
+      theme: ThemeData(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
       ),
+      // home: MyHomePage(),
     );
   }
 }
+
 
 // TODO: WishList Screen and item update
 // TODO: Order History

@@ -1,12 +1,27 @@
+import 'dart:ui_web';
+
 import 'package:flutter/material.dart';
 import 'package:project_example/lecture-6/Model/Product.dart';
 
+import '../History.dart';
+
 class CartView extends StatefulWidget {
-  const CartView(this.likedProducts, this.onProductToggle, this.onClear,
-      {super.key});
+  const CartView(
+      this.likedProducts,
+      this.wishList,
+      this.onProductToggle,
+      this.onProductWishToggle,
+      this.onClear,
+      {this.historyList = const [], Key? key}
+      ) : super(key: key);
+
+
 
   final List<Product> likedProducts;
+  final List<Product> wishList;
+  final List<Product> historyList;
   final Function onProductToggle;
+  final Function onProductWishToggle;
   final Function onClear;
 
   @override
@@ -14,6 +29,18 @@ class CartView extends StatefulWidget {
 }
 
 class _CartViewState extends State<CartView> {
+  void placeOrder(BuildContext context) {
+    print("Before navigating: ${widget.likedProducts.length}");
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => History(historyList: widget.likedProducts),
+      ),
+    );
+    widget.onClear();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +58,9 @@ class _CartViewState extends State<CartView> {
                   return ListItemView(
                     currentItem: currentItem,
                     onProductToggle: widget.onProductToggle,
+                    onProductWishToggle: widget.onProductWishToggle, // Corrected parameter name
                     likedProducts: widget.likedProducts,
+                    wishList: widget.wishList,
                   );
                 },
                 itemCount: widget.likedProducts.length,
@@ -43,34 +72,43 @@ class _CartViewState extends State<CartView> {
               child: Column(
                 children: [
                   Text(
-                      "Total Price is : ${widget.likedProducts.map((e) => e.price).reduce((value, element) => value + element)}"),
-                  Row(
-                    children: [
-                      ElevatedButton(
-                          onPressed: () => widget.onClear(),
-                          child: const Text("Cart"))
-                    ],
+                    "Total Price is : ${widget.likedProducts.map((e) => e.price).reduce((value, element) => value + element)}",
+                  ),
+                  Center(
+                    child: Row(
+                      children: [
+                        ElevatedButton(
+                          onPressed: () => placeOrder(context),
+                          child: const Text("Order Now"),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
-            )
+            ),
         ],
       ),
     );
   }
+
 }
 
 class ListItemView extends StatelessWidget {
   const ListItemView({
-    super.key,
+    Key? key,
     required this.currentItem,
     required this.onProductToggle,
+    required this.onProductWishToggle,
     required this.likedProducts,
-  });
+    required this.wishList,
+  }) : super(key: key);
 
   final Product currentItem;
   final Function onProductToggle;
+  final Function onProductWishToggle;
   final List<Product> likedProducts;
+  final List<Product> wishList;
 
   @override
   Widget build(BuildContext context) {
@@ -88,10 +126,33 @@ class ListItemView extends StatelessWidget {
                 currentItem.name,
               ),
               subtitle: Text("${currentItem.price}"),
-              trailing: Icon(
-                  likedProducts.map((e) => e.id).contains(currentItem.id)
-                      ? Icons.favorite
-                      : Icons.favorite_outline),
+              trailing: SizedBox(
+                width: 120,
+                child: Row(
+                  children: [
+                    IconButton(
+                      icon: Icon(
+                        likedProducts.contains(currentItem)
+                            ? Icons.favorite
+                            : Icons.favorite_outline,
+                      ),
+                      onPressed: () {
+                        onProductToggle(currentItem);
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        wishList.contains(currentItem)
+                            ? Icons.shopping_cart_checkout
+                            : Icons.shopping_cart,
+                      ),
+                      onPressed: () {
+                        onProductWishToggle(currentItem);
+                      },
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
         ),
