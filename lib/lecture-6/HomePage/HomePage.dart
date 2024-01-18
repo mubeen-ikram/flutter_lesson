@@ -7,13 +7,13 @@ class MyHomePageL6 extends StatefulWidget {
   const MyHomePageL6({
     this.likedProducts = const [],
     this.wishList = const [],
-    this.historyList = const [],
     required this.onProductToggle,
-    required this.onProductWishToggle, super.key});
+    required this.onProductWishToggle,
+    Key? key,
+  }) : super(key: key);
 
   final List<Product> likedProducts;
   final List<Product> wishList;
-  final List<Product> historyList;
   final Function onProductToggle;
   final Function onProductWishToggle;
 
@@ -61,7 +61,7 @@ class _MyHomePageL6State extends State<MyHomePageL6> {
                   onProductToggle: widget.onProductToggle,
                   likedProducts: widget.likedProducts,
                   wishList: widget.wishList,
-                  onProductWishToggle: widget.onProductToggle, // Pass the correct function or data
+                  onProductWishToggle: widget.onProductWishToggle, // Pass the correct function or data
                 );
               },
               itemCount: products.length,

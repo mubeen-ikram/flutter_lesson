@@ -17,7 +17,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   List<Product> likedProducts = [];
   List<Product> wishList = [];
-  List<Product> historyList= [];
+  Map<int,List<Product>> historyList={};
 
   void toggleProductLike(Product product) {
     setState(() {
@@ -41,6 +41,7 @@ class _MyAppState extends State<MyApp> {
 
   void clearAll() {
     setState(() {
+      historyList[DateTime.now().millisecondsSinceEpoch] = likedProducts.toList();
       likedProducts.clear();
       wishList.clear();
     });
@@ -66,7 +67,7 @@ class _MyAppState extends State<MyApp> {
             (Product product) => toggleWishProduct(product),
                 () => clearAll()
         ),
-        // '/history': (context) => History(historyList: [],),
+        '/history': (context) => History(historyList:historyList),
         '/': (context) => MyHomePageL6(
           likedProducts: likedProducts,
           wishList: wishList,

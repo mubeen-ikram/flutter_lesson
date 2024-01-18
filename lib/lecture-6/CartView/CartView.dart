@@ -12,14 +12,13 @@ class CartView extends StatefulWidget {
       this.onProductToggle,
       this.onProductWishToggle,
       this.onClear,
-      {this.historyList = const [], Key? key}
+      {Key? key}
       ) : super(key: key);
 
 
 
   final List<Product> likedProducts;
   final List<Product> wishList;
-  final List<Product> historyList;
   final Function onProductToggle;
   final Function onProductWishToggle;
   final Function onClear;
@@ -30,15 +29,10 @@ class CartView extends StatefulWidget {
 
 class _CartViewState extends State<CartView> {
   void placeOrder(BuildContext context) {
-    print("Before navigating: ${widget.likedProducts.length}");
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => History(historyList: widget.likedProducts),
-      ),
-    );
     widget.onClear();
   }
+
+
 
 
   @override
@@ -132,7 +126,7 @@ class ListItemView extends StatelessWidget {
                   children: [
                     IconButton(
                       icon: Icon(
-                        likedProducts.contains(currentItem)
+                        likedProducts.map((e) => e.id).contains(currentItem.id)
                             ? Icons.favorite
                             : Icons.favorite_outline,
                       ),
@@ -142,8 +136,8 @@ class ListItemView extends StatelessWidget {
                     ),
                     IconButton(
                       icon: Icon(
-                        wishList.contains(currentItem)
-                            ? Icons.shopping_cart_checkout
+                        wishList.map((e) => e.id).contains(currentItem.id)
+                        ? Icons.shopping_cart_checkout
                             : Icons.shopping_cart,
                       ),
                       onPressed: () {
