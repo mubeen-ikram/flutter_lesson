@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:project_example/lecture-6/History.dart';
 import 'package:project_example/lecture-6/WishList/WishList.dart';
 import 'package:provider/provider.dart';
-
 import 'CartView/CartView.dart';
 import 'HomePage/HomePage.dart';
 import 'Model/Product.dart';
+import 'package:project_example/Utils/SharedPrefernce.dart';
+
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -29,6 +30,10 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  @override
+  void initState() {
+    super.initState();
+  }
   void toggleWishProduct(Product product) {
     setState(() {
       if (wishList.map((e) => e.id).contains(product.id)) {
@@ -42,6 +47,8 @@ class _MyAppState extends State<MyApp> {
   void clearAll() {
     setState(() {
       historyList[DateTime.now().millisecondsSinceEpoch] = likedProducts.toList();
+      SharedPrefernce.saveHistoryMap(historyList);
+
       likedProducts.clear();
       wishList.clear();
     });
@@ -67,7 +74,7 @@ class _MyAppState extends State<MyApp> {
             (Product product) => toggleWishProduct(product),
                 () => clearAll()
         ),
-        '/history': (context) => History(historyList:historyList),
+        '/history': (context) => History(),
         '/': (context) => MyHomePageL6(
           likedProducts: likedProducts,
           wishList: wishList,
@@ -81,6 +88,10 @@ class _MyAppState extends State<MyApp> {
       // home: MyHomePage(),
     );
   }
+
+
+
+
 }
 
 

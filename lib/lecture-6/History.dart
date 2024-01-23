@@ -1,18 +1,29 @@
 import 'package:flutter/material.dart';
-
 import 'Model/Product.dart';
+import 'package:project_example/Utils/SharedPrefernce.dart';
 
 class History extends StatefulWidget {
-  final Map<int, List<Product>> historyList;
-
-  const History({required this.historyList, Key? key}) : super(key: key);
 
   @override
   State<History> createState() => _HistoryState();
 }
 
 class _HistoryState extends State<History> {
-  bool showHistory = true;
+  List<bool> showHistoryList = [];
+  Map<int, List<Product>> historyListFromSharedPreferences = {};
+
+  @override
+  void initState() {
+    super.initState();
+    loadHistoryList();
+    showHistoryList = List.generate(historyListFromSharedPreferences.length, (index) => true);
+  }
+  void loadHistoryList() async {
+    Map<int, List<Product>> savedHistoryList = await SharedPrefernce.getHistoryMap();
+    setState(() {
+      historyListFromSharedPreferences = savedHistoryList;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,36 +31,42 @@ class _HistoryState extends State<History> {
       body: Column(
         children: [
           Expanded(
-            child: Visibility(
-              visible: showHistory,
-              child: ListView.builder(
-                itemCount: widget.historyList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  int key = widget.historyList.keys.elementAt(index);
-                  List<Product> productList = widget.historyList[key] ?? [];
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Order Number: $key"),
-                      for (Product product in productList)
-                        ListTile(
+            child: ListView.builder(
+              itemCount: historyListFromSharedPreferences.length,
+              itemBuilder: (BuildContext context, int index) {
+                int key = historyListFromSharedPreferences.keys.elementAt(index);
+                List<Product> productList = historyListFromSharedPreferences[key] ?? [];
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              showHistoryList[index] = !showHistoryList[index];
+                            });
+                          },
+                          child: Text(
+                            showHistoryList[index] ? "Hide History" : "Show History",
+                          ),
+                        ),
+                      ],
+                    ),
+                    Text("Order Number: $key"),
+                    for (Product product in productList)
+                      Visibility(
+                        visible: showHistoryList[index],
+                        child: ListTile(
                           title: Text(product.name),
                           subtitle: Text("Price: ${product.price}"),
                         ),
-                      Divider(),
-                    ],
-                  );
-                },
-              ),
+                      ),
+                    Divider(),
+                  ],
+                );
+              },
             ),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              setState(() {
-                showHistory = !showHistory;
-              });
-            },
-            child: Text(showHistory ? "Hide History" : "Show History"),
           ),
         ],
       ),
