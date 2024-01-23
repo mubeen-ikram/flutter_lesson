@@ -3,7 +3,6 @@ import 'Model/Product.dart';
 import 'package:project_example/Utils/SharedPrefernce.dart';
 
 class History extends StatefulWidget {
-
   @override
   State<History> createState() => _HistoryState();
 }
@@ -16,12 +15,15 @@ class _HistoryState extends State<History> {
   void initState() {
     super.initState();
     loadHistoryList();
-    showHistoryList = List.generate(historyListFromSharedPreferences.length, (index) => true);
   }
+
   void loadHistoryList() async {
-    Map<int, List<Product>> savedHistoryList = await SharedPrefernce.getHistoryMap();
+    Map<int, List<Product>> savedHistoryList =
+        await SharedPrefernce.getHistoryMap();
     setState(() {
       historyListFromSharedPreferences = savedHistoryList;
+      showHistoryList = List.generate(
+          historyListFromSharedPreferences.length, (index) => true);
     });
   }
 
@@ -34,8 +36,11 @@ class _HistoryState extends State<History> {
             child: ListView.builder(
               itemCount: historyListFromSharedPreferences.length,
               itemBuilder: (BuildContext context, int index) {
-                int key = historyListFromSharedPreferences.keys.elementAt(index);
-                List<Product> productList = historyListFromSharedPreferences[key] ?? [];
+                int key = historyListFromSharedPreferences.keys
+                    .toList()
+                    .elementAt(index);
+                List<Product> productList =
+                    historyListFromSharedPreferences[key] ?? [];
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -48,7 +53,9 @@ class _HistoryState extends State<History> {
                             });
                           },
                           child: Text(
-                            showHistoryList[index] ? "Hide History" : "Show History",
+                            showHistoryList[index]
+                                ? "Hide History"
+                                : "Show History",
                           ),
                         ),
                       ],
