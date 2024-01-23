@@ -44,7 +44,11 @@ class _MyAppState extends State<MyApp> {
               (Product product) => toggleProductLike(product),
               () => clearAll()),
           '/': (context) => MyHomePageL6(
-              likedProducts, (Product product) => toggleProductLike(product)),
+                likedProducts,
+                (Product product) {
+                  toggleProductLike(product);
+                },
+              )
         },
         theme: ThemeData(
           useMaterial3: true,
