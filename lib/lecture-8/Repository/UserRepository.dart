@@ -6,13 +6,13 @@ class UserRepository {
 
   UserRepository(this.restClient);
 
-  Future<List<User>> getUserList() async {
+  Future<List<User>> getUserList({required int page}) async {
     try {
-      var response = await restClient.getTasks();
+      var response = await restClient.getTasks(page);
       if (response.data != null) {
         return Future.value(response.data);
       }
-      return Future.error(Exception(response.responseMessage));
+      return Future.error(Exception(response.toString()));
     } catch (error) {
       return Future.error(error);
     }

@@ -10,6 +10,7 @@ part 'ApiClient.g.dart';
 abstract class RestClient {
   factory RestClient(Dio dio) = _RestClient;
 
-  @GET("/users?page=1")
-  Future<BaseResponse<List<User>>> getTasks();
+  @GET("/users")
+  Future<BaseResponse<List<User>>> getTasks(@Query("page") int page);
+
 }
