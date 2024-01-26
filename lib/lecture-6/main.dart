@@ -35,27 +35,6 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (BuildContext context) {},
-      child: MaterialApp(
-        title: 'Namer App',
-        initialRoute: '/',
-        routes: {
-          '/cart': (context) => CartView(
-              likedProducts,
-              (Product product) => toggleProductLike(product),
-              () => clearAll()),
-          '/': (context) => MyHomePageL6(
-                likedProducts,
-                (Product product) {
-                  toggleProductLike(product);
-                },
-              )
-        },
-        theme: ThemeData(
-          useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-        ),
-        // home: MyHomePage(),
-      ),
     );
   }
 }
