@@ -27,14 +27,11 @@ class UserRepository {
       if (currentUsers != null) return Future.value(currentUsers);
 
       var response = await restClient.getUsers();
-      if (response.data != null) {
-        currentUsers = response.data.toList();
-        if (database != null) {
-          setupDataInDatabase(response.data);
-        }
-        return Future.value(response.data);
+      currentUsers = response.data.toList();
+      if (database != null) {
+        setupDataInDatabase(response.data);
       }
-      return Future.error(Exception(response.support));
+      return Future.value(response.data);
     } catch (error) {
       if (error is DioException) {
         return getUserDatabaseList();
@@ -86,5 +83,4 @@ class UserRepository {
       );
     });
   }
-
 }

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
-import 'package:path/path.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:project_example/lecture-9/ApiClient/ApiClient.dart';
 import 'package:project_example/lecture-9/Repository/UserRepository.dart';
-import 'package:sqflite/sqflite.dart';
 
 import 'Model/User.dart';
 
@@ -18,7 +16,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    super.initState();
     Dio dio = Dio(BaseOptions(contentType: "application/json"));
     dio.interceptors.add(PrettyDioLogger());
 
@@ -54,9 +52,11 @@ class _MyAppState extends State<MyApp> {
         ),
         body: Column(
           children: [
-            GestureDetector(onTap: () {
-              setState(() {});
-            }, child: const Text("Reload")),
+            GestureDetector(
+                onTap: () {
+                  setState(() {});
+                },
+                child: const Text("Reload")),
             Flexible(flex: 1, child: _buildBody(context)),
           ],
         ),
