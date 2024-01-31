@@ -13,7 +13,7 @@
       }
     }
   },
-  "countCheck": " check this out {count, plural, =0{0} =1{1} =2{2} few{messageFew} many{messageMany} other{messageOther}}",
+  "countCheck": " {count, plural, =0{No messages} =1{1 message}  other{{count} messages}}",
   "@countCheck": {
     "description": "A plural message",
     "placeholders": {

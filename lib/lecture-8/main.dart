@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-import 'package:project_example/lecture-6/Model/Product.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:project_example/lecture-8/Repository/UserRepository.dart';
 
 import 'ApiClient/ApiClient.dart';
-import 'Model/Post.dart';
 import 'Model/User.dart';
 
 class MyApp extends StatefulWidget {
@@ -14,7 +13,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   late UserRepository userRepository;
-  late RestClient restClient;
 
   @override
   void initState() {
@@ -37,6 +35,8 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
       title: 'Retrofit',
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -73,14 +73,22 @@ class _MyAppState extends State<MyApp> {
   ListView _buildPosts(BuildContext context, List<User> posts) {
     return ListView.builder(
       itemCount: posts.length,
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       itemBuilder: (context, index) {
         return Card(
           elevation: 4,
           child: ListTile(
-            title: Text(
-              posts[index].first_name,
-              style: const TextStyle(fontWeight: FontWeight.bold),
+            title: Localizations.override(
+              context: context,
+              locale: Locale('es'),
+              child: Builder(
+                builder: (context) {
+                  return Text(
+                    AppLocalizations.of(context)!.countCheck( 34),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  );
+                }
+              ),
             ),
             subtitle: Text(posts[index].email),
             leading: Column(

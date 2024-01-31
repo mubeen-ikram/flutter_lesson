@@ -11,5 +11,5 @@ abstract class RestClient {
   factory RestClient(Dio dio) = _RestClient;
 
   @GET("/users?page=1")
-  Future<BaseResponse<List<User>>> getTasks();
+  Future<BaseResponse<List<User>>> getUsers();
 }

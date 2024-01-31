@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart' as cuper;
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:project_example/lecture-9/ApiClient/ApiClient.dart';
@@ -90,11 +91,23 @@ class _MyAppState extends State<MyApp> {
           child: ListTile(
             title: Localizations.override(
               context: context,
-              locale: Locale('es'),
+              locale: Locale('ar'),
               child: Builder(builder: (context) {
-                return Text(
-                  AppLocalizations.of(context)!.countCheck(34),
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                return cuper.Column(
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.helloWorld,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      AppLocalizations.of(context)!.hello("mubeen"),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      AppLocalizations.of(context)!.countCheck(-1),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 );
               }),
             ),
